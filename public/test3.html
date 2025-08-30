@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Landing moderna — Mobile Verde</title>
+  <style>
+    :root {
+      --bg: #111111;
+      --fg: #e5e5e5;
+      --muted: #9ca3af;
+      --primary: #22c55e;
+      /* verde */
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #111111 0%, #1a1a1a 100%);
+      color: var(--fg);
+      font-size: 15px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px
+    }
+
+    .brand svg {
+      width: 42px;
+      height: 42px
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 12px
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      text-align: center
+    }
+
+    .hero h2 {
+      font-size: 26px;
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 700
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 6px 0 16px
+    }
+
+    .cta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px
+    }
+
+    .btn-outline {
+      border: 1px solid var(--muted);
+      padding: 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      background: transparent
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px
+    }
+
+    .feat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #222;
+      border-radius: 12px;
+      background: #1a1a1a
+    }
+
+    .feat svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--primary);
+      fill: none
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #222;
+      padding: 16px;
+      border-radius: 14px;
+      text-align: left
+    }
+
+    .card h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: var(--primary)
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .device-wrap {
+      margin: 24px auto;
+      max-width: 92%
+    }
+
+    .device {
+      width: 100%;
+      height: auto
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    footer a {
+      color: var(--muted);
+      margin: 0 6px;
+      text-decoration: none
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="8" width="48" height="48" rx="12" fill="var(--primary)" />
+      </svg>
+      <h1 style="font-size:18px;margin:0">NovaCo</h1>
+      <div style="font-size:12px;color:var(--muted)">Product · Insights · Speed</div>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#signin">Sign in</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Construye experiencias digitales elegantes</h2>
+    <p>Minimalismo en escala de grises con un acento verde moderno. Rápido, seguro y escalable — todo vectorial en SVG.
+    </p>
+    <div class="cta-row">
+      <button class="btn-primary">Comenzar gratis</button>
+      <button class="btn-outline">Demo</button>
+    </div>
+
+    <div class="features">
+      <div class="feat">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2 L3 14 H11 L11 22 L21 10 H13 L13 2 Z" />
+        </svg>
+        <div><strong>Rápido</strong><br /><span style="color:var(--muted);font-size:13px">Carga en 200ms</span></div>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="16" height="10" rx="2" />
+          <path d="M8 10 V8 a4 4 0 0 1 8 0 v2" />
+        </svg>
+        <div><strong>Seguro</strong><br /><span style="color:var(--muted);font-size:13px">Autenticación y roles</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Integraciones</h4>
+        <p>Conecta APIs y CMS sin código.</p>
+      </div>
+      <div class="card">
+        <h4>Escalabilidad</h4>
+        <p>Microservicios listos y caché.</p>
+      </div>
+      <div class="card">
+        <h4>Soporte 24/7</h4>
+        <p>Equipo dedicado siempre.</p>
+      </div>
+    </div>
+
+    <div class="device-wrap">
+      <svg class="device" viewBox="0 0 460 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="6" width="448" height="200" rx="16" fill="#1a1a1a" stroke="#222" />
+        <text x="230" y="110" text-anchor="middle" font-size="14" fill="var(--primary)">Vista previa SVG</text>
+      </svg>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2025 NovaCo</div>
+    <div>
+      <a href="#">Política</a>|
+      <a href="#">Contacto</a>
+    </div>
+  </footer>
+</body>
+
+</html>
