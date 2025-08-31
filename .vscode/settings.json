@@ -37,6 +37,9 @@
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
   },
+  "[sql]": {
+    "editor.defaultFormatter": "cweijan.vscode-mysql-client2"
+  },
   "tailwindCSS.classAttributes": [
     "class",
     "className",

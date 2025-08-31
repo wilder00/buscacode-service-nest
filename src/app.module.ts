@@ -2,6 +2,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { envSchema } from './helpers/environment'
@@ -37,6 +38,22 @@ import { AppContainerModule } from './modules/app-container.module'
           graphiql: graphqlPlayground,
           introspection
         }
+      },
+      inject: [ConfigService]
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        return {
+          type: 'mysql',
+          host: configService.get('DB_HOST'),
+          port: configService.get('DB_PORT'),
+          username: configService.get('DB_USERNAME'),
+          password: configService.get('DB_PASSWORD'),
+          database: configService.get('DB_DATABASE'),
+          autoLoadEntities: true,
+          synchronize: false
+        } satisfies TypeOrmModuleOptions
       },
       inject: [ConfigService]
     }),
