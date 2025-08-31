@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 
 @ObjectType()
-@Entity()
+@Entity('credentials')
 export class Credential {
   @Field(() => Int)
   @PrimaryGeneratedColumn()

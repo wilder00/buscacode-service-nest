@@ -36,7 +36,17 @@ import { AppContainerModule } from './modules/app-container.module'
           playground: graphqlPlayground,
           debug: false,
           graphiql: graphqlPlayground,
-          introspection
+          introspection,
+          formatError: (error) => {
+            const originalError =
+              error.extensions?.originalError ?? new Error(error.message)
+
+            return {
+              ...error,
+              extensions: undefined,
+              error: originalError
+            }
+          }
         }
       },
       inject: [ConfigService]

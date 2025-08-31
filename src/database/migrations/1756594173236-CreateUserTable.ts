@@ -6,6 +6,7 @@ export class CreateUserTable1756594173236 implements MigrationInterface {
       CREATE TABLE IF NOT EXISTS users (
         id CHAR(36) NOT NULL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
+        second_name VARCHAR(255),
         last_name VARCHAR(255) NOT NULL,
         second_last_name VARCHAR(255),
         phone VARCHAR(20),

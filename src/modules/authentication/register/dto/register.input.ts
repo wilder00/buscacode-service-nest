@@ -1,22 +1,30 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator'
 
 @InputType()
 export class RegisterInput {
   @Field(() => String, { description: 'Email' })
-  email: string
+  @IsEmail()
+  readonly email: string
 
   @Field(() => String, { description: 'Password' })
-  password: string
+  @IsNotEmpty()
+  readonly password: string
 
   @Field(() => String, { description: 'Name' })
-  name: string
+  @IsNotEmpty()
+  readonly name: string
 
   @Field(() => String, { description: 'Last name' })
-  lastName: string
+  @IsNotEmpty()
+  readonly lastName: string
 
-  @Field(() => String, { description: 'Second last name' })
-  secondLastName: string
+  @Field(() => String, { description: 'Second last name', nullable: true })
+  @MinLength(2)
+  @IsOptional()
+  readonly secondLastName?: string
 
   @Field(() => String, { description: 'Phone' })
-  phone: string
+  @IsNotEmpty()
+  readonly phone: string
 }

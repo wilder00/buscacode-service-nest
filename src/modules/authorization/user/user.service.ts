@@ -1,19 +1,24 @@
 import { Injectable } from '@nestjs/common'
-import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
+import { UserInput } from './dto/user.input'
+import { UserDomain } from './user.domain'
 
 @Injectable()
 export class UserService {
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user'
+  constructor(private readonly userDomain: UserDomain) {}
+
+  async create(userInput: UserInput) {
+    const user = await this.userDomain.addNewUser(userInput)
+    return user
   }
 
   findAll() {
     return `This action returns all user`
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  findOne(id: string) {
+    const user = this.userDomain.getOneById(id)
+    return user
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {

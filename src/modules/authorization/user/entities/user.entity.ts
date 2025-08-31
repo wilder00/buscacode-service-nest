@@ -9,7 +9,7 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 
-@Entity()
+@Entity('users')
 @ObjectType()
 export class User {
   @Field(() => String, { description: 'Id is an uuid' })
@@ -19,6 +19,10 @@ export class User {
   @Field(() => String)
   @Column()
   name: string
+
+  @Field(() => String)
+  @Column({ name: 'second_name', nullable: true })
+  secondName: string
 
   @Field(() => String)
   @Column({ name: 'last_name' })
