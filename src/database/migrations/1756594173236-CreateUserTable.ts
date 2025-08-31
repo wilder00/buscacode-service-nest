@@ -9,8 +9,9 @@ export class CreateUserTable1756594173236 implements MigrationInterface {
         last_name VARCHAR(255) NOT NULL,
         second_last_name VARCHAR(255),
         phone VARCHAR(20),
-        email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL
+        is_active TINYINT(1) NOT NULL DEFAULT 1,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     `
     await queryRunner.query(query)
@@ -19,10 +20,10 @@ export class CreateUserTable1756594173236 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     const isEmptyQuery = `SELECT COUNT(*) as count FROM users;`
     const isEmpty = (await queryRunner.query(isEmptyQuery)) as [
-      { count: number }
+      { count: string }
     ]
 
-    if (isEmpty[0].count === 0) {
+    if (isEmpty[0].count === '0') {
       const dropQuery = `DROP TABLE IF EXISTS users;`
       await queryRunner.query(dropQuery)
     } else {

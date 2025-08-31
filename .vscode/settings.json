@@ -54,5 +54,5 @@
   },
   "eslint.workingDirectories": ["./"],
   "cSpell.language": "en,es-ES",
-  "cSpell.words": ["buscacode", "graphiql", "nestjs"]
+  "cSpell.words": ["buscacode", "graphiql", "nestjs", "TINYINT"]
 }
