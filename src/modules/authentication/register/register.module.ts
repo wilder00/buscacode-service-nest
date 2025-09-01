@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserModule } from '../../authorization/user/user.module'
 import { LoginModule } from '../login/login.module'
@@ -8,7 +8,12 @@ import { RegisterResolver } from './register.resolver'
 import { RegisterService } from './register.service'
 
 @Module({
-  imports: [LoginModule, TypeOrmModule.forFeature([Credential]), UserModule],
-  providers: [RegisterResolver, RegisterService, RegisterDomain]
+  imports: [
+    forwardRef(() => LoginModule),
+    TypeOrmModule.forFeature([Credential]),
+    UserModule
+  ],
+  providers: [RegisterResolver, RegisterService, RegisterDomain],
+  exports: [RegisterDomain]
 })
 export class RegisterModule {}

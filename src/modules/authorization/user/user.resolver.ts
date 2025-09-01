@@ -1,10 +1,12 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Auth } from '../../authentication/auth/decorators/auth.decorator'
 import { UpdateUserInput } from './dto/update-user.input'
 import { UserInput } from './dto/user.input'
 import { User } from './entities/user.entity'
 import { UserService } from './user.service'
 
 @Resolver(() => User)
+@Auth()
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 

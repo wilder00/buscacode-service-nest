@@ -1,12 +1,15 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { Module } from '@nestjs/common'
+import { Logger, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
+import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { envSchema } from './helpers/environment'
 import { AppContainerModule } from './modules/app-container.module'
+
+const logger = new Logger('AppModule', { timestamp: true })
 
 @Module({
   imports: [
@@ -25,22 +28,28 @@ import { AppContainerModule } from './modules/app-container.module'
           'GRAPHQL_PLAYGROUND',
           false
         )
+        const debug = configService.get<boolean>('GRAPHQL_DEBUG', false)
         const introspection = await Promise.resolve(graphqlPlayground)
         const path = '/graphql'
-
         return {
           autoSchemaFile: 'schema.gql',
           installSubscriptionHandlers: true,
           useGlobalPrefix: false,
           path,
           playground: graphqlPlayground,
-          debug: false,
+          debug,
           graphiql: graphqlPlayground,
           introspection,
           formatError: (error) => {
             const originalError =
               error.extensions?.originalError ?? new Error(error.message)
-
+            if (
+              error.extensions?.originalError === undefined ||
+              (originalError as unknown as { statusCode: number })
+                ?.statusCode === 500
+            ) {
+              logger.error(originalError)
+            }
             return {
               ...error,
               extensions: undefined,
@@ -65,6 +74,18 @@ import { AppContainerModule } from './modules/app-container.module'
           synchronize: false
         } satisfies TypeOrmModuleOptions
       },
+      inject: [ConfigService]
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      useFactory: (configService: ConfigService) => {
+        return {
+          global: true,
+          secret: configService.get('JWT_SECRET'),
+          signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') }
+        }
+      },
+      imports: [ConfigModule],
       inject: [ConfigService]
     }),
     AppContainerModule

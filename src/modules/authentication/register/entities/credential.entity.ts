@@ -26,4 +26,8 @@ export class Credential {
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User
+
+  @Field(() => Boolean)
+  @Column({ name: 'is_active', default: true })
+  isActive: boolean
 }

@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class CreateUserTable1756594173236 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const query = `
+    const query = `/* SQL */
       CREATE TABLE IF NOT EXISTS users (
         id CHAR(36) NOT NULL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -19,13 +19,13 @@ export class CreateUserTable1756594173236 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const isEmptyQuery = `SELECT COUNT(*) as count FROM users;`
+    const isEmptyQuery = `/* SQL */ SELECT COUNT(*) as count FROM users;`
     const isEmpty = (await queryRunner.query(isEmptyQuery)) as [
       { count: string }
     ]
 
     if (isEmpty[0].count === '0') {
-      const dropQuery = `DROP TABLE IF EXISTS users;`
+      const dropQuery = `/* SQL */ DROP TABLE IF EXISTS users;`
       await queryRunner.query(dropQuery)
     } else {
       throw new Error('Should not delete users table because it has data')

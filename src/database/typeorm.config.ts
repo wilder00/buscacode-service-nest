@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 dotenv.config({ path: '.env' })
 
 const environment = process.env.NODE_ENV

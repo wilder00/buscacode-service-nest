@@ -8,6 +8,7 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "explicit"
   },
+  "material-icon-theme.activeIconPack": "nest",
   "eslint.validate": [
     "javascript",
     "typescript",

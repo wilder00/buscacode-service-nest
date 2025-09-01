@@ -20,7 +20,7 @@ export class User {
   @Column()
   name: string
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column({ name: 'second_name', nullable: true })
   secondName: string
 
