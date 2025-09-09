@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class CreateCredentialTable1756596496554 implements MigrationInterface {
+export class CreateCredentialsTable1756596496554 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const query = `
+    const query = `/* SQL */
       CREATE TABLE IF NOT EXISTS credentials (
         id INT NOT NULL AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL UNIQUE,
@@ -19,13 +19,13 @@ export class CreateCredentialTable1756596496554 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const isEmptyQuery = `SELECT COUNT(*) as count FROM credentials;`
+    const isEmptyQuery = `/* SQL */ SELECT COUNT(*) as count FROM credentials;`
     const isEmpty = (await queryRunner.query(isEmptyQuery)) as [
       { count: string }
     ]
 
     if (isEmpty[0].count === '0') {
-      const dropQuery = `DROP TABLE IF EXISTS credentials;`
+      const dropQuery = `/* SQL */ DROP TABLE IF EXISTS credentials;`
       await queryRunner.query(dropQuery)
     } else {
       throw new Error('Should not delete credentials table because it has data')

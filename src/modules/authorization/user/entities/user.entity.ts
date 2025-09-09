@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -22,7 +23,7 @@ export class User {
 
   @Field(() => String, { nullable: true })
   @Column({ name: 'second_name', nullable: true })
-  secondName: string
+  secondName?: string
 
   @Field(() => String)
   @Column({ name: 'last_name' })
@@ -32,6 +33,7 @@ export class User {
   @Column({ name: 'second_last_name', nullable: true })
   secondLastName?: string
 
+  @Index()
   @Field(() => String)
   @Column()
   phone: string
@@ -40,11 +42,11 @@ export class User {
   @Column({ name: 'is_active', default: true })
   isActive: boolean
 
-  @Field(() => Date)
+  @Field(() => String)
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date
 
-  @Field(() => Date)
+  @Field(() => String)
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date
 

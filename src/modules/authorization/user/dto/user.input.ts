@@ -10,7 +10,7 @@ export class UserInput {
 
   @Field(() => String, { nullable: true })
   @IsOptional()
-  secondName: string
+  secondName?: string
 
   @Field(() => String)
   @IsNotEmpty()

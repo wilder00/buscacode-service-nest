@@ -35,8 +35,15 @@ export class RegisterDomain {
   }
 
   async registerCredential(createRegisterInput: RegisterInput) {
-    const { name, lastName, secondLastName, email, phone, password } =
-      createRegisterInput
+    const {
+      name,
+      secondName,
+      lastName,
+      secondLastName,
+      email,
+      phone,
+      password
+    } = createRegisterInput
     const repeatedCredentialRequest = await this.credentialRepository.findOne({
       where: { email }
     })
@@ -50,6 +57,7 @@ export class RegisterDomain {
 
     const userInput = new UserInput()
     userInput.name = name
+    userInput.secondName = secondName
     userInput.lastName = lastName
     userInput.secondLastName = secondLastName
     userInput.phone = phone

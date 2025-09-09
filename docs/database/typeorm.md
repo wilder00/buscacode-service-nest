@@ -5,6 +5,13 @@ Mejor y más detalles en [typeorm document](https://typeorm.io/docs/advanced-top
 ### Apply migration
 
 ```bash
+pnpm run migration:create src/database/migrations/CreateCurrencyTable
+pnpm typeorm migration:create src/database/migrations/CreateCurrencyTable
+```
+
+### Apply migration
+
+```bash
 pnpm typeorm migration:run -d src/database/typeorm.config.ts
 ```
 

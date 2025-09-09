@@ -15,6 +15,11 @@ export class RegisterInput {
   @IsNotEmpty()
   readonly name: string
 
+  @Field(() => String, { description: 'Second name', nullable: true })
+  @MinLength(2)
+  @IsOptional()
+  readonly secondName?: string
+
   @Field(() => String, { description: 'Last name' })
   @IsNotEmpty()
   readonly lastName: string
