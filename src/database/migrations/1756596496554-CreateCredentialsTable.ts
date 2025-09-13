@@ -19,16 +19,7 @@ export class CreateCredentialsTable1756596496554 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const isEmptyQuery = `/* SQL */ SELECT COUNT(*) as count FROM credentials;`
-    const isEmpty = (await queryRunner.query(isEmptyQuery)) as [
-      { count: string }
-    ]
-
-    if (isEmpty[0].count === '0') {
-      const dropQuery = `/* SQL */ DROP TABLE IF EXISTS credentials;`
-      await queryRunner.query(dropQuery)
-    } else {
-      throw new Error('Should not delete credentials table because it has data')
-    }
+    const dropQuery = `/* SQL */ DROP TABLE IF EXISTS credentials;`
+    await queryRunner.query(dropQuery)
   }
 }

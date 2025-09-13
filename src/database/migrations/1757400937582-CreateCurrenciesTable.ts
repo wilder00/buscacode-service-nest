@@ -15,17 +15,6 @@ export class CreateCurrenciesTable1757400937582 implements MigrationInterface {
       );
     `
     await queryRunner.query(query)
-
-    const insertQuery = `/* SQL */
-      INSERT INTO currencies (code, numeric_code, name, symbol, decimals) VALUES
-      ('USD', '840', 'Dólar', 'US$', 2),
-      ('PEN', '604', 'Nuevo Sol', 'S/', 2),
-      ('EUR', '978', 'Euro', '€', 2),
-      ('GBP', '826', 'Libra Esterlina', '£', 2),
-      ('JPY', '392', 'Yen', '¥', 0),
-      ('KRW', '410', 'Won', '₩', 0);
-    `
-    await queryRunner.query(insertQuery)
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

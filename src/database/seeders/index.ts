@@ -18,6 +18,7 @@ async function bootstrap() {
   }
 
   const seederNameList = seederName.split(',')
+  const isAll = seederNameList.includes('ALL')
 
   let moduleName: string[] = []
   const productionSeeds = seederNameList
@@ -38,8 +39,10 @@ async function bootstrap() {
     })
     .map(([, seeder]) => seeder)
 
-  logger.verbose('Production seeders | starting: ' + moduleName.join(', '))
-  await seeder.run(productionSeeds)
+  logger.verbose(
+    'Production seeders | starting: ' + (isAll ? 'ALL' : moduleName.join(', '))
+  )
+  await seeder.run(isAll ? Object.values(productionSeeders) : productionSeeds)
 
   if (env === 'development') {
     moduleName = []
@@ -60,8 +63,11 @@ async function bootstrap() {
         return hasSeeder
       })
       .map(([, seeder]) => seeder)
-    logger.verbose('Develop seeders | starting: ' + moduleName.join(', '))
-    await seeder.run(developSeeds)
+
+    logger.verbose(
+      'Develop seeders | starting: ' + (isAll ? 'ALL' : moduleName.join(', '))
+    )
+    await seeder.run(isAll ? Object.values(developSeeders) : developSeeds)
   }
 
   await app.close()

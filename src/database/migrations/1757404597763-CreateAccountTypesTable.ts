@@ -15,19 +15,10 @@ export class CreateAccountTypesTable1757404597763
       );
     `
     await queryRunner.query(query)
-
-    const insertQuery = `/* SQL */
-      INSERT INTO account_types (code, name, description) VALUES
-      ('wallet', 'Wallet', 'Cuentas relacionadas a billeteras digitales.'),
-      ('credit', 'Crédito', 'Cuentas de tarjeta de crédito'),
-      ('cash', 'Efectivo', 'Cuentas de efectivo'),
-      ('bank', 'Bancaria', 'Cuentas bancarias como los de ahorros.');
-    `
-    await queryRunner.query(insertQuery)
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const query = `
+    const query = `/* SQL */
       DROP TABLE IF EXISTS account_types;
     `
     await queryRunner.query(query)
