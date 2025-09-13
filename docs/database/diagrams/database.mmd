@@ -1,0 +1,31 @@
+---
+title: Buscacode Database
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+
+erDiagram
+  users {
+    string id PK
+  }
+  credentials {
+    string id PK
+  }
+  accounts {
+    string id PK
+  }
+  
+
+
+  users ||..|| credentials : has
+  users ||..o{ accounts : owns
+  accounts ||..o{ transactions : has
+  users ||..o{ transactions : makes
+  transactions ||..o| transaction_details : has
+  accounts }o..|| currencies : "is in"
+  accounts }|..|| account_types : "is a"
+  transaction_details }|..|| cash_flow_categories : "is a"
+  transactions }|..|| currencies : "is in"
+  transactions }|..|| currencies : "base in"

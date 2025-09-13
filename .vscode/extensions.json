@@ -1,4 +1,4 @@
 {
-  "recommendations": [],
+  "recommendations": ["mermaidchart.vscode-mermaid-chart"],
   "unwantedRecommendations": []
 }

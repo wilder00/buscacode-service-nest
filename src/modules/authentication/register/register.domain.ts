@@ -2,16 +2,13 @@ import { serviceErrorCodeMap } from '@/src/helpers/errors.helper'
 import { hashPassword } from '@/src/tools/bcrypt.tool'
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
   InternalServerErrorException,
   Logger
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
-import { UserInput } from '../../authorization/user/dto/user.input'
-import { UserDomain } from '../../authorization/user/user.domain'
+import { User } from '../../authorization/user/entities/user.entity'
 import { RegisterInput } from './dto/register.input'
 import { Credential } from './entities/credential.entity'
 
@@ -21,8 +18,6 @@ export class RegisterDomain {
   constructor(
     @InjectRepository(Credential)
     private readonly credentialRepository: Repository<Credential>,
-    @Inject(forwardRef(() => UserDomain))
-    private readonly userDomain: UserDomain,
     private dataSource: DataSource
   ) {}
 
@@ -55,22 +50,30 @@ export class RegisterDomain {
       )
     }
 
-    const userInput = new UserInput()
-    userInput.name = name
-    userInput.secondName = secondName
-    userInput.lastName = lastName
-    userInput.secondLastName = secondLastName
-    userInput.phone = phone
-    userInput.isActive = true
+    // const userInput = new UserInput()
+    // userInput.name = name
+    // userInput.secondName = secondName
+    // userInput.lastName = lastName
+    // userInput.secondLastName = secondLastName
+    // userInput.phone = phone
+    // userInput.isActive = true
+
+    const newUser = new User()
+    newUser.name = name
+    newUser.secondName = secondName
+    newUser.lastName = lastName
+    newUser.secondLastName = secondLastName
+    newUser.phone = phone
+    newUser.isActive = true
 
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
 
-    let error: Error | null = null
     let newCredential: Credential | null = null
     try {
-      const user = await this.userDomain.addNewUser(userInput)
+      //const user = await this.userDomain.addNewUser(userInput)
+      const user = await queryRunner.manager.save(newUser)
       const hashedPassword = await hashPassword(password)
       const credential = new Credential()
       credential.email = email
@@ -80,15 +83,13 @@ export class RegisterDomain {
       newCredential = await queryRunner.manager.save(credential)
 
       await queryRunner.commitTransaction()
+      return newCredential
     } catch (e) {
       await queryRunner.rollbackTransaction()
-      error = new InternalServerErrorException(e)
+      this.logger.error(e)
+      throw new InternalServerErrorException(e)
     } finally {
       await queryRunner.release()
     }
-
-    if (error !== null) throw error
-
-    return newCredential
   }
 }

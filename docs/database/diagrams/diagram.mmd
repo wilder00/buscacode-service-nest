@@ -1,0 +1,50 @@
+erDiagram
+    users {
+        int id PK 
+        string name
+        string email
+        string phone
+        boolean is_active
+    }
+
+    accounts {
+        int id PK
+        int user_id FK
+        string name
+        string type
+        decimal balance
+        string currency
+    }
+
+    transactions {
+        int id PK
+        int account_id FK
+        string description
+        decimal amount
+        string type
+        datetime created_at
+    }
+
+    categories {
+        int id PK
+        string name
+        string type
+    }
+
+    users ||--|| categories : "belongs to"
+    users ||--o{ accounts : "owns"
+    accounts ||--o{ transactions : "has"
+
+
+%% 
+%% Este diagrama representa una base de datos para una aplicación de finanzas personales:
+%% 
+%% - **USERS**: tabla de usuarios que contiene información básica (nombre, email, teléfono, estado).  
+%% - **ACCOUNTS**: cada usuario puede tener múltiples cuentas (ej: cuenta bancaria, billetera, tarjeta de crédito) con su saldo y moneda.  
+%% - **TRANSACTIONS**: almacena los movimientos de dinero asociados a una cuenta (ingresos o gastos) con descripción, monto, tipo y fecha.  
+%% - **CATEGORIES**: clasifica las transacciones (ej: comida, transporte, salario, inversión).  
+%% - Relaciones:  
+%%   - Un usuario **tiene muchas cuentas**.  
+%%   - Una cuenta **tiene muchas transacciones**.  
+%%   - Una transacción **pertenece a una categoría**.  
+%% 
