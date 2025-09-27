@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql'
 import {
   Column,
   Entity,
@@ -12,6 +12,11 @@ export enum ColorType {
   CLASS = 'CLASS',
   STYLE = 'STYLE'
 }
+
+registerEnumType(ColorType, {
+  name: 'ColorType',
+  description: 'Enum for color types'
+})
 
 @ObjectType()
 @Entity('cash_flow_categories')
@@ -44,7 +49,7 @@ export class CashFlowCategory {
     enumName: 'ColorType',
     nullable: true
   })
-  colorTypes?: ColorType
+  colorType?: ColorType
 
   @Field(() => Boolean, { defaultValue: true })
   @Column({ name: 'enabled', type: 'boolean', default: true })
@@ -78,7 +83,8 @@ export class CashFlowCategory {
 
   @OneToMany(
     () => CashFlowCategory,
-    (cashFlowCategory) => cashFlowCategory.categoryFather
+    (cashFlowCategory) => cashFlowCategory.categoryFather,
+    { cascade: ['insert'] }
   )
   @Field(() => [CashFlowCategory], { nullable: true })
   categoryChildren?: CashFlowCategory[] | null

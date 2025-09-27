@@ -2,8 +2,6 @@ import { serviceErrorCodeMap } from '@/src/helpers/errors.helper'
 import {
   CanActivate,
   ExecutionContext,
-  forwardRef,
-  Inject,
   Injectable,
   Logger,
   UnauthorizedException
@@ -23,7 +21,6 @@ export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private readonly configService: ConfigService,
-    @Inject(forwardRef(() => UserDomain))
     private readonly userDomain: UserDomain
   ) {}
 

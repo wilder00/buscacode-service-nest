@@ -15,7 +15,7 @@ export class CreateCashFlowCategoriesTable1757413113046
         category_father_id BIGINT DEFAULT NULL,
         enabled BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (category_father_id) REFERENCES cash_flow_categories(id) ON DELETE RESTRICT
       );
     `

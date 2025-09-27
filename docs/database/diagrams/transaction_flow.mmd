@@ -1,0 +1,9 @@
+flowchart TD
+    A([Inicio]) --> B{¿Fondos suficientes en cuenta origen?}
+    B -- No --> C[Rechazar transacción]
+    B -- Sí --> D[Debitar cuenta origen]
+    D --> E[Acreditar cuenta destino]
+    E --> F[Registrar movimiento en tabla de transacciones]
+    F --> G[Actualizar balances]
+    G --> H([Confirmar transacción])
+    C --> H

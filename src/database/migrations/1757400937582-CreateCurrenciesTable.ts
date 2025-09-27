@@ -11,7 +11,7 @@ export class CreateCurrenciesTable1757400937582 implements MigrationInterface {
         decimals TINYINT(2) NOT NULL DEFAULT 2,
         is_active TINYINT(1) NOT NULL DEFAULT 1,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       );
     `
     await queryRunner.query(query)

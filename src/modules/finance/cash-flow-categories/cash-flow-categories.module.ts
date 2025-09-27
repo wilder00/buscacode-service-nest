@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { CashFlowCategoriesService } from './cash-flow-categories.service';
-import { CashFlowCategoriesResolver } from './cash-flow-categories.resolver';
+import { Module } from '@nestjs/common'
+import { CashFlowCategoriesResolver } from './cash-flow-categories.resolver'
+import { CashFlowCategoriesService } from './cash-flow-categories.service'
 
 @Module({
-  providers: [CashFlowCategoriesResolver, CashFlowCategoriesService],
+  providers: [CashFlowCategoriesResolver, CashFlowCategoriesService]
 })
 export class CashFlowCategoriesModule {}

@@ -13,7 +13,7 @@ export const usersSeeder = async (dataSource: DataSource) => {
   const userRepo = dataSource.getRepository(User)
   const credentialRepo = dataSource.getRepository(Credential)
 
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 100; i++) {
     try {
       const newUser: DeepPartial<User> = {
         name: faker.person.firstName(),

@@ -72,6 +72,9 @@
     "nestjs",
     "QLISO",
     "Reembolsos",
+    "RESIGNAL",
+    "SQLEXCEPTION",
+    "SQLSTATE",
     "TINYINT"
   ]
 }
