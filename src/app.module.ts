@@ -71,7 +71,8 @@ const logger = new Logger('AppModule', { timestamp: true })
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
           autoLoadEntities: true,
-          synchronize: false
+          synchronize: false,
+          timezone: configService.get('DB_TIMEZONE')
         } satisfies TypeOrmModuleOptions
       },
       inject: [ConfigService]

@@ -1,5 +1,5 @@
 import { User } from '@/src/modules/authorization/user/entities/user.entity'
-import { AccountType } from '@/src/modules/finance/account-type/entities/account-type.entity'
+import { AccountType } from '@/src/modules/finance/account/entities/account-type.entity'
 import { Currency } from '@/src/modules/finance/currencies/entities/currency.entity'
 import { Field, Float, ObjectType } from '@nestjs/graphql'
 import {
@@ -28,7 +28,7 @@ export class Account {
   description?: string
 
   @Field()
-  @Column({ type: 'boolean', default: true })
+  @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean
 
   @Field(() => User)
@@ -52,9 +52,6 @@ export class Account {
 
   @Field(() => Float)
   @Column({
-    type: 'decimal',
-    precision: 19,
-    scale: 2,
     default: 0
   })
   balance: number

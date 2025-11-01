@@ -25,6 +25,7 @@ import { SeederService } from './seeder.service'
           database: configService.get('DB_DATABASE'),
           autoLoadEntities: true,
           synchronize: false,
+          timezone: configService.get('DB_TIMEZONE'), // The database is in UTC
           entities: ['src/modules/**/entities/*.ts']
         } satisfies TypeOrmModuleOptions
       },

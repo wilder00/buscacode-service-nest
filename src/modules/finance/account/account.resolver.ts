@@ -1,44 +1,30 @@
 import { Auth } from '@/src/modules/authentication/auth/decorators/auth.decorator'
 import { GetUser } from '@/src/modules/authentication/auth/decorators/get-user.decorator'
 import { User } from '@/src/modules/authorization/user/entities/user.entity'
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { AccountService } from './account.service'
-import { CreateAccountInput } from './dto/create-account.input'
-import { UpdateAccountInput } from './dto/update-account.input'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { AccountDomain } from './account.domain'
+import { AccountInput } from './dto/account.input'
 import { Account } from './entities/account.entity'
 
 @Resolver(() => Account)
 @Auth()
 export class AccountResolver {
-  constructor(private readonly accountService: AccountService) {}
+  constructor(private readonly accountDomain: AccountDomain) {}
 
   @Mutation(() => Account)
   createAccount(
-    @Args('createAccountInput') createAccountInput: CreateAccountInput
+    @GetUser() owner: User,
+    @Args('accountInput') accountInput: AccountInput
   ) {
-    return this.accountService.create(createAccountInput)
+    return this.accountDomain.create(owner, accountInput)
   }
 
   @Query(() => [Account], { name: 'accounts' })
   findAll(@GetUser() owner: User) {
-    console.log(owner)
-    return this.accountService.findAll(owner)
+    return this.accountDomain.getAllMyAccounts(owner.id)
   }
-
   @Query(() => Account, { name: 'account' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.accountService.findOne(id)
-  }
-
-  @Mutation(() => Account)
-  updateAccount(
-    @Args('updateAccountInput') updateAccountInput: UpdateAccountInput
-  ) {
-    return this.accountService.update(updateAccountInput.id, updateAccountInput)
-  }
-
-  @Mutation(() => Account)
-  removeAccount(@Args('id', { type: () => Int }) id: number) {
-    return this.accountService.remove(id)
+  findOne(@GetUser() owner: User, @Args('id') id: string) {
+    return this.accountDomain.getMyAccountById(owner.id, id)
   }
 }

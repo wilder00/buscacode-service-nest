@@ -1,35 +1,20 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { CurrenciesService } from './currencies.service';
-import { Currency } from './entities/currency.entity';
-import { CreateCurrencyInput } from './dto/create-currency.input';
-import { UpdateCurrencyInput } from './dto/update-currency.input';
+import { Args, Query, Resolver } from '@nestjs/graphql'
+import { Auth } from '../../authentication/auth/decorators/auth.decorator'
+import { CurrenciesDomain } from './currencies.domain'
+import { Currency } from './entities/currency.entity'
 
 @Resolver(() => Currency)
+@Auth()
 export class CurrenciesResolver {
-  constructor(private readonly currenciesService: CurrenciesService) {}
-
-  @Mutation(() => Currency)
-  createCurrency(@Args('createCurrencyInput') createCurrencyInput: CreateCurrencyInput) {
-    return this.currenciesService.create(createCurrencyInput);
-  }
+  constructor(private readonly currenciesDomain: CurrenciesDomain) {}
 
   @Query(() => [Currency], { name: 'currencies' })
   findAll() {
-    return this.currenciesService.findAll();
+    return this.currenciesDomain.getAll()
   }
 
   @Query(() => Currency, { name: 'currency' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.currenciesService.findOne(id);
-  }
-
-  @Mutation(() => Currency)
-  updateCurrency(@Args('updateCurrencyInput') updateCurrencyInput: UpdateCurrencyInput) {
-    return this.currenciesService.update(updateCurrencyInput.id, updateCurrencyInput);
-  }
-
-  @Mutation(() => Currency)
-  removeCurrency(@Args('id', { type: () => Int }) id: number) {
-    return this.currenciesService.remove(id);
+  findOne(@Args('symbol', { type: () => String }) symbol: string) {
+    return this.currenciesDomain.getOne(symbol)
   }
 }

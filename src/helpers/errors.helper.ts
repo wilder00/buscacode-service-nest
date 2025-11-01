@@ -26,9 +26,21 @@ const AUTH = {
     code: 'AUTH_TOKEN_REQUIRED',
     message: 'Token is required'
   },
+  AUTH_REFRESH_TOKEN_REQUIRED: {
+    code: 'AUTH_REFRESH_TOKEN_REQUIRED',
+    message: 'Refresh token is required'
+  },
+  AUTH_REFRESH_TOKEN_EXPIRED: {
+    code: 'AUTH_REFRESH_TOKEN_EXPIRED',
+    message: 'Refresh token expired'
+  },
   AUTH_TOKEN_EXPIRED: {
     code: 'AUTH_TOKEN_EXPIRED',
     message: 'Token expired'
+  },
+  AUTH_REFRESH_TOKEN_INVALID: {
+    code: 'AUTH_REFRESH_TOKEN_INVALID',
+    message: 'Refresh token invalido'
   },
   AUTH_TOKEN_INVALID: {
     code: 'AUTH_TOKEN_INVALID',

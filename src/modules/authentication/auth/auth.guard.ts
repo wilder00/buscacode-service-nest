@@ -10,8 +10,9 @@ import { ConfigService } from '@nestjs/config'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt'
 import { Request } from 'express'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { User } from '../../authorization/user/entities/user.entity'
-import { UserDomain } from '../../authorization/user/user.domain'
 import { AuthRequest } from './interfaces/auth-request.interface'
 import { JwtPayload } from './interfaces/jwt.interface'
 
@@ -21,7 +22,8 @@ export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private readonly configService: ConfigService,
-    private readonly userDomain: UserDomain
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -47,7 +49,10 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: this.configService.get('JWT_SECRET')
       })
-      user = await this.userDomain.getOneById(payload.sub)
+      user = await this.userRepository.findOne({
+        where: { id: payload.sub },
+        relations: { credential: true }
+      })
     } catch (e) {
       if (e instanceof TokenExpiredError) {
         throw new UnauthorizedException(

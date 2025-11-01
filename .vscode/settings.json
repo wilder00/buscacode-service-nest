@@ -75,6 +75,7 @@
     "RESIGNAL",
     "SQLEXCEPTION",
     "SQLSTATE",
+    "timestamptz",
     "TINYINT"
   ]
 }

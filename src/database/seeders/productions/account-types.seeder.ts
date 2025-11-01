@@ -1,5 +1,5 @@
 // src/database/seeders/production/categories.seeder.ts
-import { AccountType } from '@/src/modules/finance/account-type/entities/account-type.entity'
+import { AccountType } from '@/src/modules/finance/account/entities/account-type.entity'
 import { Logger } from '@nestjs/common'
 import { DataSource, DeepPartial } from 'typeorm'
 
