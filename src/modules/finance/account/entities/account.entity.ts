@@ -51,18 +51,16 @@ export class Account {
   currency: Currency
 
   @Field(() => Float)
-  @Column({
-    default: 0
-  })
+  @Column('decimal', { precision: 19, scale: 2, default: 0 })
   balance: number
 
-  @Field()
+  @Field(() => String)
   @CreateDateColumn({
     name: 'created_at'
   })
   createdAt: Date
 
-  @Field()
+  @Field(() => String)
   @UpdateDateColumn({
     name: 'updated_at'
   })

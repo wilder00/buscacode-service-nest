@@ -9,6 +9,7 @@ export class CreateAccountTypesTable1757404597763
         code VARCHAR(50) NOT NULL PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
         description VARCHAR(255),
+        color VARCHAR(50) DEFAULT '#10B981',
         is_active BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

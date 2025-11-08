@@ -23,6 +23,7 @@ export class AccountResolver {
   findAll(@GetUser() owner: User) {
     return this.accountDomain.getAllMyAccounts(owner.id)
   }
+
   @Query(() => Account, { name: 'account' })
   findOne(@GetUser() owner: User, @Args('id') id: string) {
     return this.accountDomain.getMyAccountById(owner.id, id)

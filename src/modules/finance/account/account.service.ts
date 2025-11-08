@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DeepPartial, Repository } from 'typeorm'
+import { DeepPartial, FindOptionsRelations, Repository } from 'typeorm'
 import { Account } from './entities/account.entity'
 
 @Injectable()
@@ -16,8 +16,9 @@ export class AccountService {
     return newAccount
   }
 
-  findAllByOwnerId(ownerId: string) {
+  findAllByOwnerId(ownerId: string, relations?: FindOptionsRelations<Account>) {
     return this.accountRepository.find({
+      relations,
       where: {
         user: {
           id: ownerId
@@ -29,7 +30,19 @@ export class AccountService {
   findOne(id: string) {
     return this.accountRepository.findOneBy({ id })
   }
-  findOwnOneById(ownerId: string, id: string) {
-    return this.accountRepository.findOneBy({ id, user: { id: ownerId } })
+  findOwnOneById(
+    ownerId: string,
+    id: string,
+    relations?: FindOptionsRelations<Account>
+  ) {
+    return this.accountRepository.findOne({
+      relations,
+      where: {
+        id,
+        user: {
+          id: ownerId
+        }
+      }
+    })
   }
 }

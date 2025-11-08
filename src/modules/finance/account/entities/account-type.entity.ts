@@ -16,15 +16,19 @@ export class AccountType {
   @Column()
   description: string
 
+  @Field(() => String)
+  @Column({ name: 'color', default: '#10B981' })
+  color: string
+
   @Field(() => Boolean)
   @Column({ name: 'is_active', default: true })
   isActive: boolean
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({ name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({
     name: 'updated_at',
     default: () => 'CURRENT_TIMESTAMP',

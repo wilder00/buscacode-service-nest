@@ -17,12 +17,22 @@ export class AccountDomain {
   ) {}
 
   async getAllMyAccounts(userId: string) {
-    const accounts = await this.accountService.findAllByOwnerId(userId)
+    const accounts = await this.accountService.findAllByOwnerId(userId, {
+      accountType: true,
+      currency: true
+    })
     return accounts
   }
 
   async getMyAccountById(userId: string, accountId: string) {
-    const account = await this.accountService.findOwnOneById(userId, accountId)
+    const account = await this.accountService.findOwnOneById(
+      userId,
+      accountId,
+      {
+        accountType: true,
+        currency: true
+      }
+    )
     if (!account) throw new BadRequestException('Account not found')
     return account
   }

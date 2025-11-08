@@ -15,25 +15,36 @@ export const accountTypesSeeder = async (
     {
       code: 'wallet',
       name: 'Wallet',
+      color: '#F59E0B',
       description: 'Cuentas relacionadas a billeteras digitales.',
       isActive: true
     },
     {
       code: 'credit',
       name: 'Crédito',
+      color: '#EC4899',
       description: 'Cuentas de tarjeta de crédito',
       isActive: true
     },
     {
       code: 'cash',
       name: 'Efectivo',
+      color: '#10B981',
       description: 'Cuentas de efectivo',
       isActive: true
     },
     {
       code: 'bank',
       name: 'Bancaria',
+      color: '#F59E0B',
       description: 'Cuentas bancarias como los de ahorros.',
+      isActive: true
+    },
+    {
+      code: 'investment',
+      name: 'Inversión',
+      color: '#3B82F6',
+      description: 'Cuentas de inversión de cualquier tipo.',
       isActive: true
     }
   ]

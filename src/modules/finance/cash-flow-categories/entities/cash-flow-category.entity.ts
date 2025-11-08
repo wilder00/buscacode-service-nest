@@ -55,7 +55,7 @@ export class CashFlowCategory {
   @Column({ name: 'enabled', type: 'boolean', default: true })
   enabled: boolean
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({
     name: 'created_at',
     type: 'timestamp',
@@ -63,7 +63,7 @@ export class CashFlowCategory {
   })
   createdAt: Date
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({
     name: 'updated_at',
     type: 'timestamp',

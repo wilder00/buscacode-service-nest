@@ -31,11 +31,11 @@ export class Currency {
   @Column({ name: 'is_active', default: true })
   isActive: boolean
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({ name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date
 
-  @Field(() => Date)
+  @Field(() => String)
   @Column({
     name: 'updated_at',
     default: () => 'CURRENT_TIMESTAMP',
