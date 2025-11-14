@@ -1,13 +1,11 @@
 import { Credential } from '@/src/modules/authentication/register/entities/credential.entity'
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql'
 import {
   Column,
-  CreateDateColumn,
   Entity,
   Index,
   OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
+  PrimaryGeneratedColumn
 } from 'typeorm'
 
 @Entity('users')
@@ -42,12 +40,22 @@ export class User {
   @Column({ name: 'is_active', default: true })
   isActive: boolean
 
-  @Field(() => String)
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+  // Timestamps
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP'
+  })
   createdAt: Date
 
-  @Field(() => String)
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP'
+  })
   updatedAt: Date
 
   @OneToOne(() => Credential, (credential) => credential.user)

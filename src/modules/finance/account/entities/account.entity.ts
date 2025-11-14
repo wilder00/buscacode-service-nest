@@ -1,16 +1,15 @@
 import { User } from '@/src/modules/authorization/user/entities/user.entity'
 import { AccountType } from '@/src/modules/finance/account/entities/account-type.entity'
 import { Currency } from '@/src/modules/finance/currencies/entities/currency.entity'
-import { Field, Float, ObjectType } from '@nestjs/graphql'
+import { Field, Float, GraphQLISODateTime, ObjectType } from '@nestjs/graphql'
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
+  PrimaryGeneratedColumn
 } from 'typeorm'
+import { Transaction } from '../../transaction/entities/transaction.entity'
 
 @ObjectType()
 @Entity({ name: 'accounts' })
@@ -54,15 +53,24 @@ export class Account {
   @Column('decimal', { precision: 19, scale: 2, default: 0 })
   balance: number
 
-  @Field(() => String)
-  @CreateDateColumn({
-    name: 'created_at'
+  // Timestamps
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP'
   })
   createdAt: Date
 
-  @Field(() => String)
-  @UpdateDateColumn({
-    name: 'updated_at'
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP'
   })
   updatedAt: Date
+
+  @Field(() => [Transaction], { nullable: true })
+  transactions: Transaction[]
 }
