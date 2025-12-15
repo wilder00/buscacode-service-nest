@@ -2,7 +2,7 @@ import { PaginatorInput } from '@/src/common/dto/paginator.input'
 import { Paginator } from '@/src/common/entities/paginator.entity'
 import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, FindOperator, Repository } from 'typeorm'
 import { User } from '../../authorization/user/entities/user.entity'
 import { TransactionInput } from './dto/transaction.input'
 import { PaginatedTransactionList } from './dto/transaction.output'
@@ -63,11 +63,12 @@ export class TransactionService {
       amount,
       amountBase,
       exchangeRate,
-      relatedAccountId
+      relatedAccountId,
+      executedAt
     } = transactionInput
 
     const result = await this.dataSource.query<any[][]>(
-      `CALL proc_insert_transaction(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `CALL proc_insert_transaction(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         name,
         description || null,
@@ -79,7 +80,8 @@ export class TransactionService {
         amount,
         amountBase,
         exchangeRate,
-        relatedAccountId || null
+        relatedAccountId || null,
+        executedAt
       ]
     )
     const transaction =
@@ -118,7 +120,8 @@ export class TransactionService {
   async getAccountTransactionsByUserId(
     userId: string,
     accountId: string,
-    paginatorInput?: PaginatorInput | null
+    paginatorInput: PaginatorInput | null = null,
+    executedDate?: FindOperator<Date>
   ): Promise<PaginatedTransactionList> {
     const count = await this.transactionRepository.count({
       where: {
@@ -143,13 +146,15 @@ export class TransactionService {
         },
         user: {
           id: userId
-        }
+        },
+        executedAt: executedDate
       },
       relations: {
         currency: true,
         currencyBase: true
       },
       order: {
+        executedAt: 'DESC',
         updatedAt: 'DESC'
       },
       skip: paginator?.skip,

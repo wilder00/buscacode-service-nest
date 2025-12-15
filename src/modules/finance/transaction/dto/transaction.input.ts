@@ -1,4 +1,4 @@
-import { Field, Float, InputType } from '@nestjs/graphql'
+import { Field, Float, GraphQLISODateTime, InputType } from '@nestjs/graphql'
 import {
   IsNotEmpty,
   IsOptional,
@@ -56,4 +56,8 @@ export class TransactionInput {
   @IsOptional()
   @IsUUID()
   relatedAccountId?: string
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @IsOptional()
+  executedAt?: Date | null
 }

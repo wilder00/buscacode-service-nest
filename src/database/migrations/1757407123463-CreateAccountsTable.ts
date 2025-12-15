@@ -11,7 +11,7 @@ export class CreateAccountsTable1757407123463 implements MigrationInterface {
         user_id CHAR(36) NOT NULL,
         account_type_code VARCHAR(50) NOT NULL,
         currency_code VARCHAR(3) NOT NULL,
-        balance DECIMAL(19, 2) NOT NULL DEFAULT 0.00,
+        balance DECIMAL(19, 4) NOT NULL DEFAULT 0.0000,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,

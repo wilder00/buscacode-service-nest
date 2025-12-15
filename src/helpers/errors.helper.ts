@@ -45,6 +45,10 @@ const AUTH = {
   AUTH_TOKEN_INVALID: {
     code: 'AUTH_TOKEN_INVALID',
     message: 'Token invalido'
+  },
+  AUTH_TOKEN_INVALID_TYPE: {
+    code: 'AUTH_TOKEN_INVALID_TYPE',
+    message: 'Token invalido'
   }
 }
 

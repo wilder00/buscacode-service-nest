@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @ObjectType()
@@ -24,13 +24,18 @@ export class AccountType {
   @Column({ name: 'is_active', default: true })
   isActive: boolean
 
-  @Field(() => String)
-  @Column({ name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP'
+  })
   createdAt: Date
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @Column({
     name: 'updated_at',
+    type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP'
   })

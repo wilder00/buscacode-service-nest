@@ -87,6 +87,8 @@ export class AccountService {
 
   async getMyRecentTransactions(userId: string, accountId: string) {
     const limit = this.accountDomain.getLimitOfTransactionToDisplay()
+    const restrictionToFindBetween =
+      this.accountDomain.getRangeOfDateTransactionToDisplay()
     const { data: transactions } =
       await this.transactionService.getAccountTransactionsByUserId(
         userId,
@@ -94,7 +96,8 @@ export class AccountService {
         {
           limit,
           page: 1
-        }
+        },
+        restrictionToFindBetween
       )
 
     return transactions

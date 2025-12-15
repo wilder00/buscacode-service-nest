@@ -1,4 +1,10 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql'
+import {
+  Field,
+  GraphQLISODateTime,
+  Int,
+  ObjectType,
+  registerEnumType
+} from '@nestjs/graphql'
 import {
   Column,
   Entity,
@@ -55,7 +61,7 @@ export class CashFlowCategory {
   @Column({ name: 'enabled', type: 'boolean', default: true })
   enabled: boolean
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @Column({
     name: 'created_at',
     type: 'timestamp',
@@ -63,7 +69,7 @@ export class CashFlowCategory {
   })
   createdAt: Date
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @Column({
     name: 'updated_at',
     type: 'timestamp',

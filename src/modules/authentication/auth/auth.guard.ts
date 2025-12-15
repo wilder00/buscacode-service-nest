@@ -1,3 +1,4 @@
+import { cookeys } from '@/src/helpers/constants'
 import { serviceErrorCodeMap } from '@/src/helpers/errors.helper'
 import {
   CanActivate,
@@ -9,8 +10,8 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt'
-import { Request } from 'express'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Request } from 'express'
 import { Repository } from 'typeorm'
 import { User } from '../../authorization/user/entities/user.entity'
 import { AuthRequest } from './interfaces/auth-request.interface'
@@ -35,13 +36,19 @@ export class AuthGuard implements CanActivate {
     } else {
       request = context.switchToHttp().getRequest()
     }
+    const cookieValue = request.signedCookies?.[cookeys.ACCESS_TOKEN] as
+      | string
+      | undefined
+    let token = typeof cookieValue === 'string' ? cookieValue : undefined
 
-    const token = this.extractTokenFromHeader(request)
     if (!token) {
-      throw new UnauthorizedException(
-        serviceErrorCodeMap.AUTH.AUTH_TOKEN_REQUIRED.message,
-        serviceErrorCodeMap.AUTH.AUTH_TOKEN_REQUIRED.code
-      )
+      token = this.extractTokenFromHeader(request)
+      if (!token) {
+        throw new UnauthorizedException(
+          serviceErrorCodeMap.AUTH.AUTH_TOKEN_REQUIRED.message,
+          serviceErrorCodeMap.AUTH.AUTH_TOKEN_REQUIRED.code
+        )
+      }
     }
 
     let user: User | null = null

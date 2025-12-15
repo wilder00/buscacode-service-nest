@@ -43,6 +43,7 @@ export class TransactionResolver {
     @GetUser() owner: User,
     @Args('transactionInput') transactionInput: TransactionInput
   ) {
+    console.log(JSON.stringify(transactionInput, null, 2))
     return this.transactionService.createTransaction(owner, transactionInput)
   }
 }

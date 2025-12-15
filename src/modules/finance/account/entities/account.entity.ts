@@ -50,7 +50,7 @@ export class Account {
   currency: Currency
 
   @Field(() => Float)
-  @Column('decimal', { precision: 19, scale: 2, default: 0 })
+  @Column('decimal', { precision: 19, scale: 4, default: 0 })
   balance: number
 
   // Timestamps

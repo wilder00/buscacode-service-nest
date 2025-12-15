@@ -9,10 +9,10 @@ import {
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  RelationId
 } from 'typeorm'
 import { Account } from '../../account/entities/account.entity'
 import { Currency } from '../../currencies/entities/currency.entity'
@@ -32,10 +32,6 @@ registerEnumType(TransactionType, {
 
 @ObjectType()
 @Entity('transactions')
-@Index('idx_transactions_account_id', ['account'])
-@Index('idx_transactions_reference_uuid', ['referenceUuid'])
-@Index('idx_transactions_user_id', ['user'])
-@Index('idx_user_account', ['user', 'account'])
 export class Transaction {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
@@ -69,12 +65,18 @@ export class Transaction {
   @JoinColumn({ name: 'user_id' })
   user: User
 
+  @RelationId((t: Transaction) => t.user)
+  userId: string
+
   @Field(() => Account)
   @ManyToOne(() => Account, {
     onDelete: 'RESTRICT'
   })
   @JoinColumn({ name: 'account_id' })
   account: Account
+
+  @RelationId((t: Transaction) => t.account)
+  accountId: string
 
   // Related account for transfer/exchange
   @Field(() => Account, { nullable: true })
@@ -98,7 +100,7 @@ export class Transaction {
 
   // Financial fields
   @Field(() => Float)
-  @Column({ type: 'decimal', precision: 19, scale: 2 })
+  @Column({ type: 'decimal', precision: 19, scale: 4 })
   amount: number
 
   @Field(() => TransactionType)
@@ -113,7 +115,7 @@ export class Transaction {
     name: 'amount_base',
     type: 'decimal',
     precision: 19,
-    scale: 2,
+    scale: 4,
     comment: 'The amount_base is in the account currency value'
   })
   amountBase: number
@@ -123,7 +125,7 @@ export class Transaction {
     name: 'exchange_rate',
     type: 'decimal',
     precision: 19,
-    scale: 3,
+    scale: 8,
     comment: 'Is the factor to convert the amount to amount_base'
   })
   exchangeRate: number
@@ -139,6 +141,14 @@ export class Transaction {
       'The uuid of the reference to the transaction between our accounts. Both transaction should have the same reference_uuid'
   })
   referenceUuid?: string
+
+  @Field(() => GraphQLISODateTime)
+  @Column({
+    name: 'executed_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP'
+  })
+  executedAt: Date
 
   // Timestamps
   @Field(() => GraphQLISODateTime)

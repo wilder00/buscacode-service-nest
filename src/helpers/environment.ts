@@ -13,6 +13,9 @@ export const envSchema = z.object({
     .string()
     .default('false')
     .transform((value) => value === 'true'),
+  CORS_ALLOWED_ORIGINS: z.string(),
+  COOKIE_SECRET: z.string().min(32),
+  COOKIE_DOMAIN: z.string(),
   DB_HOST: z.string(),
   DB_PORT: z.coerce.number().default(3306),
   DB_USERNAME: z.string(),

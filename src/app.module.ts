@@ -4,13 +4,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { Request, Response } from 'express'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { envSchema } from './helpers/environment'
 import { AppContainerModule } from './modules/app-container.module'
 
 const logger = new Logger('AppModule', { timestamp: true })
-
+type GraphQLContext = {
+  req: Request
+  res: Response
+}
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,6 +44,16 @@ const logger = new Logger('AppModule', { timestamp: true })
           debug,
           graphiql: graphqlPlayground,
           introspection,
+          csrfPrevention: {
+            requestHeaders: [
+              'x-apollo-operation-name',
+              'Apollo-Require-Preflight'
+            ]
+          },
+          context: ({ req, res }: GraphQLContext): GraphQLContext => ({
+            req,
+            res
+          }),
           formatError: (error) => {
             const originalError =
               error.extensions?.originalError ?? new Error(error.message)
